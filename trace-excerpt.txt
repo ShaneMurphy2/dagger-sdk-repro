@@ -1,0 +1,7 @@
+Excerpt from results/ignored-2.log (second measured warm run).
+Workspace path redacted. Full command: mise exec -- dagger check --progress=plain -vvv
+
+574 : ┆ ┆ Host.directory(path: "<workspace>", gitignore: true, gitIgnoreRoot: "<workspace>"): Directory!
+574 : ┆ Host.directory(path: "<workspace>", gitignore: true, gitIgnoreRoot: "<workspace>"): Directory!
+574 : ┆ ┆ Host.directory DONE [5.8s]
+60  : ┆ dag://?check=typescript-sdk/generate/stale DONE [7.5s]

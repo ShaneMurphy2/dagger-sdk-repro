@@ -1,0 +1,67 @@
+name: SDK freshness repro
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - uses: jdx/mise-action@6be3c7ed4c21d4f76b208d351d95aac273ebb76d # v5
+        with:
+          version: "2026.10.4"
+          cache: false
+
+      - name: Record environment
+        run: |
+          docker info
+          mkdir -p results
+          mise exec -- dagger version > results/environment.txt
+          mise --version >> results/environment.txt
+          python3 --version >> results/environment.txt
+          uname -a >> results/environment.txt
+          git rev-parse HEAD >> results/environment.txt
+
+      - name: Compare warm SDK freshness checks
+        # All nine checks share one engine; each phase discards its warm-up.
+        run: python3 repro.py
+
+      - name: Summarize timings
+        if: ${{ always() && hashFiles('results/summary.json') != '' }}
+        run: |
+          python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path("results/summary.json").read_text())
+          print("## SDK freshness timings\n")
+          print(f"Synthetic ignored files: {result['files']:,}. Warm-up runs omitted.\n")
+          print("| State | Run | CLI wall time | SDK freshness | Longest host read |")
+          print("| --- | ---: | ---: | ---: | ---: |")
+          for sample in result["samples"]:
+              if not sample["warmup"]:
+                  print(f"| {sample['phase']} | {sample['run']} | "
+                        f"{sample['wall_seconds']:.3f}s | {sample['sdk_seconds']:.1f}s | "
+                        f"{sample['longest_host_read_seconds']:.1f}s |")
+          print(f"\nSource/config unchanged: **{result['inputs_unchanged']}**.")
+          print("\nFull progress logs and environment details are in the run artifacts.")
+          PY
+
+      - name: Upload results and logs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sdk-freshness-results
+          path: results/
+          retention-days: 30
+          if-no-files-found: warn

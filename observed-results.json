@@ -1,0 +1,96 @@
+{
+  "files": 50000,
+  "bytes_per_file": 256,
+  "command": [
+    "mise",
+    "exec",
+    "--",
+    "dagger",
+    "check",
+    "--progress=plain",
+    "-vvv"
+  ],
+  "inputs_unchanged": true,
+  "samples": [
+    {
+      "phase": "empty",
+      "run": 0,
+      "warmup": true,
+      "wall_seconds": 2.434,
+      "sdk_seconds": 1.7,
+      "longest_host_read_seconds": 0.0
+    },
+    {
+      "phase": "empty",
+      "run": 1,
+      "warmup": false,
+      "wall_seconds": 2.06,
+      "sdk_seconds": 1.2,
+      "longest_host_read_seconds": 0.0
+    },
+    {
+      "phase": "empty",
+      "run": 2,
+      "warmup": false,
+      "wall_seconds": 2.01,
+      "sdk_seconds": 1.2,
+      "longest_host_read_seconds": 0.0
+    },
+    {
+      "phase": "ignored",
+      "run": 0,
+      "warmup": true,
+      "wall_seconds": 8.864,
+      "sdk_seconds": 8.1,
+      "longest_host_read_seconds": 6.3
+    },
+    {
+      "phase": "ignored",
+      "run": 1,
+      "warmup": false,
+      "wall_seconds": 8.406,
+      "sdk_seconds": 7.7,
+      "longest_host_read_seconds": 6.0
+    },
+    {
+      "phase": "ignored",
+      "run": 2,
+      "warmup": false,
+      "wall_seconds": 8.269,
+      "sdk_seconds": 7.5,
+      "longest_host_read_seconds": 5.8
+    },
+    {
+      "phase": "restored",
+      "run": 0,
+      "warmup": true,
+      "wall_seconds": 2.04,
+      "sdk_seconds": 1.2,
+      "longest_host_read_seconds": 0.0
+    },
+    {
+      "phase": "restored",
+      "run": 1,
+      "warmup": false,
+      "wall_seconds": 2.007,
+      "sdk_seconds": 1.2,
+      "longest_host_read_seconds": 0.0
+    },
+    {
+      "phase": "restored",
+      "run": 2,
+      "warmup": false,
+      "wall_seconds": 2.013,
+      "sdk_seconds": 1.2,
+      "longest_host_read_seconds": 0.0
+    }
+  ],
+  "captured_on": "2026-10-28",
+  "platform": {
+    "os": "macOS",
+    "version": "26.7.1",
+    "architecture": "arm64"
+  },
+  "dagger_release": "01ef75dd5f763e941d009330defb79193db9c82e",
+  "typescript_sdk": "v1.0.4"
+}

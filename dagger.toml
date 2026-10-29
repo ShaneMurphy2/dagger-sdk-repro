@@ -1,0 +1,12 @@
+[modules.typescript-sdk]
+source = "github.com/dagger/typescript-sdk@v1.0.4"
+
+[sdks.typescript]
+module = "typescript-sdk"
+
+[modules.repro]
+source = ".dagger/modules/repro"
+
+[sdks.typescript.scopes.".dagger/modules/repro"]
+is-module = true
+name = "repro"

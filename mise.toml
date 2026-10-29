@@ -1,0 +1,7 @@
+[env]
+DAGGER_X_RELEASE = "01ef75dd5f763e941d009330defb79193db9c82e"
+
+[tools."http:dagger"]
+version = "1.0.0-beta.21"
+url = 'https://dl.dagger.io/dagger/releases/{{ version }}/dagger_v{{ version }}_{{ os(macos="darwin") }}_{{ arch(x64="amd64") }}.tar.gz'
+checksum_url = "https://dl.dagger.io/dagger/releases/{{ version }}/checksums.txt"
