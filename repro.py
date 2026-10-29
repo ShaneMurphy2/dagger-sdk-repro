@@ -53,7 +53,9 @@ def main():
             with log.open("w") as output:
                 result = subprocess.run(COMMAND, cwd=ROOT, stdout=output, stderr=subprocess.STDOUT)
             elapsed = time.perf_counter() - start
-            text = log.read_text().replace(str(ROOT), "<workspace>")
+            # GitHub Actions adds ANSI colors even with --progress=plain.
+            text = re.sub(r"\x1b\[[0-?]*[ -/]*[@-~]", "", log.read_text())
+            text = text.replace(str(ROOT), "<workspace>")
             log.write_text(text)
             if result.returncode:
                 raise SystemExit(f"Dagger check failed; see {log}")
